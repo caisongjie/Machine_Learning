@@ -1,8 +1,12 @@
 import pandas as pd
-import quandl,math
+import quandl,math, datetime
 import numpy as np
 from sklearn import preprocessing, cross_validation, svm
 from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+from matplotlib import style
+
+style.use('ggplot')
 
 quandl.ApiConfig.api_key = 'mxCZaX7q5PPoFWsSjbsS'
 df = quandl.get('WIKI/GOOGL')
@@ -33,4 +37,25 @@ classifier = LinearRegression(n_jobs=-1)
 # classifier = svm.SVR(kernal = 'poly')
 classifier.fit(x_train,y_train)
 accuracy = classifier.score(x_test,y_test)
-print(accuracy)
+
+predictSet = classifier.predict(x_lately)
+
+df['predict'] = np.nan
+
+lastDate = df.iloc[-1].name
+lastUnix = lastDate.timestamp()
+oneDay = 86400
+nextUnix = lastUnix + oneDay
+
+for i in predictSet:
+    nextDate = datetime.datetime.fromtimestamp(nextUnix)
+    nextUnix += oneDay
+    df.loc[nextDate] = [np.nan for _ in range(len(df.columns)-1)] + [i]
+
+print('Accuracy : ',accuracy)
+df['Adj. Close'].plot()
+df['predict'].plot()
+plt.legend(loc=4)
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.show()
