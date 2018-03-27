@@ -19,12 +19,13 @@ df.fillna(-99999, inplace=True)
 predictOut = int(math.ceil(0.01*len(df)))
 
 df['label'] = df[predictCol].shift(-predictOut)
-df.dropna(inplace=True)
 
 x = np.array(df.drop(['label'],1))
-y = np.array(df['label'])
-
 x = preprocessing.scale(x)
+x_lately = x[-predictOut:]
+x = x[:-predictOut:]
+df.dropna(inplace=True)
+y = np.array(df['label'])
 
 x_train, x_test, y_train, y_test = cross_validation.train_test_split(x,y, test_size=0.2)
 
