@@ -5,6 +5,7 @@ from sklearn import preprocessing, cross_validation, svm
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from matplotlib import style
+import pickle
 
 style.use('ggplot')
 
@@ -33,9 +34,16 @@ y = np.array(df['label'])
 
 x_train, x_test, y_train, y_test = cross_validation.train_test_split(x,y, test_size=0.2)
 
-classifier = LinearRegression(n_jobs=-1)
-# classifier = svm.SVR(kernal = 'poly')
-classifier.fit(x_train,y_train)
+# if you want to train the model, uncomment the following lines
+# classifier = LinearRegression(n_jobs=-1)
+# # classifier = svm.SVR(kernal = 'poly')
+# classifier.fit(x_train,y_train)
+# with open('linearregression.pickle', 'wb')as f:
+#     pickle.dump(classifier,f)
+
+pickle_in = open('linearregression.pickle', 'rb') # save the classifier
+classifier = pickle.load(pickle_in)
+
 accuracy = classifier.score(x_test,y_test)
 
 predictSet = classifier.predict(x_lately)
