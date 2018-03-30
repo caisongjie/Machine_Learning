@@ -21,3 +21,4 @@ example_measures = np.array([[4,2,1,1,1,2,3,2,1],[4,2,1,2,2,2,3,2,1]])
 example_measures = example_measures.reshape(len(example_measures),-1)
 predict_val = clf.predict(example_measures)
 print(predict_val)
+
