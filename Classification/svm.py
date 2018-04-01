@@ -1,6 +1,13 @@
 import numpy as np
 from sklearn import preprocessing, cross_validation, neighbors, svm
 import pandas as pd
+#some math in svm:
+#1. decision rule: w • u + b >=0 then positive sample
+#2. constraints: yi(xi * w + b) -1 = 0
+#3. maximize the width -> minimize \w\
+
+# pros for svm : good at dealing with high dimensional data; works well on small data sets
+# cons: picking the right kernel and parameters
 
 df = pd.read_csv('breast-cancer-wisconsin.data.txt')
 df.replace('?',-99999,inplace=True)# deal with missing data
