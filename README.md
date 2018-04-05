@@ -6,5 +6,6 @@
   <li>K Nearest Neighbor</li>
   <li>Support Vector Machine(SVM)</li>
   <li>K means</li>
+  <li>Mean shift</li>
 </ul>
 </div>
